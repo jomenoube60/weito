@@ -1,8 +1,18 @@
 #!/bin/bash
 
-FILE_PATH="my_records"
+FILENAME="my_records"
 today=$(date +'%a %d %m %Y')
+if [ ! -d "$HOME/.local/share/health" ]
+then
+	mkdir "$HOME/.local/share/health"
+fi
 
+if [ ! -d "$HOME/.local/share/health/weight" ]
+then
+	mkdir "$HOME/.local/share/health/weight"
+fi
+
+DATA_PATH="$HOME/.local/share/health/weight" 
 weight=""
 chest=""
 hip=""
@@ -41,11 +51,12 @@ while getopts "c:ht:w:W:H:" option;do
 			;;
 	esac
 done
-if [ ! -f FILE_PATH ]
+PATH="$DATA_PATH/$FILENAME"
+if [ ! -f $PATH ]
 then
-	echo "DATE				WEIGHT		WAIST		HIP		CHEST" > $FILE_PATH
-	echo "-----------------------------------------------------------------------------------------" >> $FILE_PATH
+	echo "DATE				WEIGHT		WAIST		HIP		CHEST" > $PATH
+	echo "-----------------------------------------------------------------------------------------" >> $PATH
 	
 fi
-echo "$today			$weight		$waist		$hip	$chest" >> $FILE_PATH
+echo "$today			$weight		$waist		$hip	$chest" >> $PATH
 exit 0
