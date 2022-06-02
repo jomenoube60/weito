@@ -1,0 +1,43 @@
+#!/bin/bash
+
+today=$(date +'%a %d %m %Y')
+weight=""
+chest=""
+hip=""
+thigh=""
+waist=""
+echo -e "$today\t\t$1\t$2" >> myweight
+while getopts "c:ht:w:W:H:" option;do
+	case $option in
+		c)
+			 chest=$OPTARG
+			;;
+		H)
+			hip=$OPTARG
+			;;
+		t)
+			thigh=$OPTARG
+			;;
+		w)
+			weight=$OPTARG
+			;;
+		W)
+			waist=$OPTARG
+			;;
+		h)
+			echo "Syntax: scriptTemplate [-c|h|t|w|W|H]"
+			echo "options:"
+			echo "c     Record chest circumference measurement in cm."
+			echo "h     Record hip circumference measurement in cm."
+			echo "w     Record weight circumference measurement in kg."
+			echo "W     Record Waist circumference measurement in cm"
+			echo "h     Help."
+			;;
+		\?)
+			echo "$OPTARG : option invalide"
+			exit 1
+			;;
+	esac
+done
+echo "OK!"
+exit 0
