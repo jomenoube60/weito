@@ -1,16 +1,17 @@
 #!/bin/bash
 
+FILE_PATH="my_records"
 today=$(date +'%a %d %m %Y')
+
 weight=""
 chest=""
 hip=""
 thigh=""
 waist=""
-echo -e "$today\t\t$1\t$2" >> myweight
 while getopts "c:ht:w:W:H:" option;do
 	case $option in
 		c)
-			 chest=$OPTARG
+				chest=$OPTARG
 			;;
 		H)
 			hip=$OPTARG
@@ -32,6 +33,7 @@ while getopts "c:ht:w:W:H:" option;do
 			echo "w     Record weight circumference measurement in kg."
 			echo "W     Record Waist circumference measurement in cm"
 			echo "h     Help."
+			exit 0
 			;;
 		\?)
 			echo "$OPTARG : option invalide"
@@ -39,5 +41,11 @@ while getopts "c:ht:w:W:H:" option;do
 			;;
 	esac
 done
-echo "OK!"
+if [ ! -f FILE_PATH ]
+then
+	echo "DATE				WEIGHT		WAIST		HIP		CHEST" > $FILE_PATH
+	echo "-----------------------------------------------------------------------------------------" >> $FILE_PATH
+	
+fi
+echo "$today			$weight		$waist		$hip	$chest" >> $FILE_PATH
 exit 0
