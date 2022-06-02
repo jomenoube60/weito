@@ -18,7 +18,7 @@ chest=""
 hip=""
 thigh=""
 waist=""
-while getopts "c:ht:w:W:H:s" option;do
+while getopts "c:ht:w:W:H:sr" option;do
 	case $option in
 		c)
 				chest=$OPTARG
@@ -36,14 +36,23 @@ while getopts "c:ht:w:W:H:s" option;do
 			waist=$OPTARG
 			;;
 		s)
-			lines=$(wc -l < $DATA_PATH)
-			if [ $lines -gt 15 ]
-			then
-				echo "DATE				WEIGHT		WAIST		HIP		CHEST"
-				echo "-----------------------------------------------------------------------------------------"
+			if [ -f $DATA_PATH ]
+			then 
+				lines=$(wc -l < $DATA_PATH)
+				if [ $lines -gt 15 ]
+				then
+					echo "DATE				WEIGHT		WAIST		HIP		CHEST"
+					echo "-----------------------------------------------------------------------------------------"
 
+				fi
+				tail $DATA_PATH
+			else
+				echo "No records"
 			fi
-			tail $DATA_PATH
+			exit 0
+			;;
+		r)
+			rm $DATA_PATH
 			exit 0
 			;;
 		h)
