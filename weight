@@ -35,7 +35,17 @@ while getopts "c:ht:w:W:H:s" option;do
 		W)
 			waist=$OPTARG
 			;;
-			
+		s)
+			lines=$(wc -l < $DATA_PATH)
+			if [ $lines -gt 15 ]
+			then
+				echo "DATE				WEIGHT		WAIST		HIP		CHEST"
+				echo "-----------------------------------------------------------------------------------------"
+
+			fi
+			tail $DATA_PATH
+			exit 0
+			;;
 		h)
 			echo "Syntax: scriptTemplate [-c|h|t|w|W|H]"
 			echo "options:"
