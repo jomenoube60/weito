@@ -12,13 +12,13 @@ then
 	mkdir "$HOME/.local/share/health/weight"
 fi
 
-DATA_PATH="$HOME/.local/share/health/weight" 
+DATA_PATH="$HOME/.local/share/health/weight/$FILENAME" 
 weight=""
 chest=""
 hip=""
 thigh=""
 waist=""
-while getopts "c:ht:w:W:H:" option;do
+while getopts "c:ht:w:W:H:s" option;do
 	case $option in
 		c)
 				chest=$OPTARG
@@ -35,6 +35,7 @@ while getopts "c:ht:w:W:H:" option;do
 		W)
 			waist=$OPTARG
 			;;
+			
 		h)
 			echo "Syntax: scriptTemplate [-c|h|t|w|W|H]"
 			echo "options:"
@@ -51,12 +52,12 @@ while getopts "c:ht:w:W:H:" option;do
 			;;
 	esac
 done
-PATH="$DATA_PATH/$FILENAME"
-if [ ! -f $PATH ]
+
+if [ ! -f $DATA_PATH ]
 then
-	echo "DATE				WEIGHT		WAIST		HIP		CHEST" > $PATH
-	echo "-----------------------------------------------------------------------------------------" >> $PATH
+	echo "DATE				WEIGHT		WAIST		HIP		CHEST" > $DATA_PATH
+	echo "-----------------------------------------------------------------------------------------" >> $DATA_PATH
 	
 fi
-echo "$today			$weight		$waist		$hip	$chest" >> $PATH
+echo "$today			$weight		$waist		$hip	$chest" >> $DATA_PATH
 exit 0
